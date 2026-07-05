@@ -44,7 +44,7 @@ export default function UserPaymentsPage({
     <>
       <PageHeader title={`${user.name} の支払履歴`} backHref={`/users/${id}`} />
 
-      <div className="mx-auto max-w-[640px] px-8 py-8 lg:px-12">
+      <div className="max-w-[640px] px-8 py-8 lg:px-12">
         {/* サマリー */}
         <div className="rise mb-5 flex flex-wrap gap-3">
           <Summary label="支払い済み" value={`${paidCount}ヶ月`} tone="accent" />

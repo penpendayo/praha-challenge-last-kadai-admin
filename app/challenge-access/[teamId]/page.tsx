@@ -37,7 +37,7 @@ export default function TeamAccessPage({
     <>
       <PageHeader title="課題開放" backHref="/challenge-access" />
 
-      <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12">
+      <div className="max-w-[720px] px-8 py-8 lg:px-12">
         <section className="rise overflow-hidden rounded-2xl border border-line bg-surface-raised shadow-[0_12px_30px_-24px_rgba(27,26,22,0.35)]">
           {/* ヘッダ */}
           <div className="border-b border-line bg-surface px-7 py-6">

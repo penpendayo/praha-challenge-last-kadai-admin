@@ -85,7 +85,7 @@ export default function UserDetailPage({
     <>
       <PageHeader title="ユーザー詳細" backHref="/users" />
 
-      <div className="mx-auto max-w-[640px] px-8 py-8 lg:px-12">
+      <div className="max-w-[640px] px-8 py-8 lg:px-12">
         <section className="rise">
           <div className="overflow-hidden rounded-2xl border border-line bg-surface-raised shadow-[0_1px_0_rgba(0,0,0,0.02),0_12px_30px_-24px_rgba(27,26,22,0.35)]">
             {/* フィールド */}

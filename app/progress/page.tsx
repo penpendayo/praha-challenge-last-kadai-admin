@@ -103,7 +103,7 @@ export default function ProgressPage() {
         description="期を選ぶと、その期の受講生が課題ごとにどこまで進んでいるかを一覧できます。"
       />
 
-      <div className="mx-auto max-w-[1180px] px-8 py-8 lg:px-12">
+      <div className="max-w-[1180px] px-8 py-8 lg:px-12">
         {/* 凡例＋期セレクター（表の右上）*/}
         <div className="rise mb-5 flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">

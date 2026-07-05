@@ -36,7 +36,7 @@ export default function UsersPage() {
         description="受講生を選ぶと、その受講生の詳細ページで期・メールアドレス・チームを確認・変更できます。"
       />
 
-      <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12">
+      <div className="max-w-[720px] px-8 py-8 lg:px-12">
         {/* 名前・メールで検索 */}
         <div className="rise relative mb-3">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint">

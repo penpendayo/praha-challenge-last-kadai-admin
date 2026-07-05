@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import {
@@ -23,12 +23,15 @@ export default function TeamMembersPage({
   // どのチームにも配属されていない受講生（割り当て候補）
   const unassigned = store.users.filter((u) => !u.teamId);
 
+  // 直前にこのチームへ追加した受講生（登場アニメーションを付ける対象）
+  const [justAddedId, setJustAddedId] = useState<string | null>(null);
+
   // チーム（または期）が見つからないときは 404 相当の案内を出す
   if (!cohort || !team) {
     return (
       <>
         <PageHeader title="チームが見つかりません" backHref={`/cohorts/${id}`} />
-        <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12">
+        <div className="max-w-[720px] px-8 py-8 lg:px-12">
           <p className="rise text-[13.5px] text-muted">
             指定されたチームは存在しません。
             <Link href="/cohorts" className="ml-1 font-medium text-accent hover:underline">
@@ -49,7 +52,7 @@ export default function TeamMembersPage({
         backHref={`/cohorts/${id}`}
       />
 
-      <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12 space-y-8">
+      <div className="max-w-[720px] px-8 py-8 lg:px-12 space-y-8">
         {/* メンバー一覧 */}
         <section className="rise">
           <h2 className="mb-2 text-[12px] font-semibold uppercase tracking-widest text-muted">
@@ -63,7 +66,12 @@ export default function TeamMembersPage({
             ) : (
               <ul className="divide-y divide-line">
                 {members.map((u) => (
-                  <li key={u.id} className="group flex items-center gap-3 px-4 py-3.5 transition hover:bg-paper/70">
+                  <li
+                    key={u.id}
+                    className={`group flex items-center gap-3 px-4 py-3.5 transition hover:bg-paper/70 ${
+                      u.id === justAddedId ? "row-enter" : ""
+                    }`}
+                  >
                     <Link href={`/users/${u.id}`} className="flex min-w-0 flex-1 items-center gap-3">
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[14px] font-medium text-ink">
@@ -112,7 +120,10 @@ export default function TeamMembersPage({
                     </span>
                     <button
                       type="button"
-                      onClick={() => assignUserToTeam(u.id, teamId)}
+                      onClick={() => {
+                        assignUserToTeam(u.id, teamId);
+                        setJustAddedId(u.id);
+                      }}
                       className="shrink-0 rounded-lg bg-accent px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-accent-hover"
                     >
                       チームに追加

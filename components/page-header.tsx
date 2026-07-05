@@ -48,9 +48,9 @@ export function PageHeader({
   return (
     <header
       ref={ref}
-      className="sticky top-0 z-10 border-b border-line bg-paper/85 backdrop-blur-sm"
+      className="border-b border-line bg-paper"
     >
-      <div className="mx-auto flex max-w-[1180px] items-end justify-between gap-6 px-8 py-6 lg:px-12">
+      <div className="flex max-w-[1180px] items-end justify-between gap-6 px-8 py-6 lg:px-12">
         <div className="flex items-center gap-3">
           {backHref ? (
             <Link href={backHref} aria-label="一覧に戻る" className={backClass}>

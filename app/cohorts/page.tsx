@@ -13,9 +13,8 @@ import {
 export default function CohortsPage() {
   const { cohorts, teams, currentCohortId: current } = useCohortStore();
 
-  const [flash, setFlash] = useState("");
-  // 「新しい期を開始」の確認ダイアログ
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  // 直前に追加した期（登場アニメーションを付ける対象）
+  const [justAddedId, setJustAddedId] = useState<string | null>(null);
 
   // 期ごとの規模（チーム数・受講生数）。新しい期は 0 になる。
   const stats = useMemo(() => {
@@ -29,25 +28,15 @@ export default function CohortsPage() {
     return map;
   }, [cohorts, teams]);
 
-  function showFlash(message: string) {
-    setFlash(message);
-    setTimeout(() => setFlash(""), 1800);
-  }
-
-  // 次の期の名前（1期からの連番）
-  const nextName = `${cohorts.length + 1}期`;
-
   function startNewCohort() {
     const created = startCohort();
-    setConfirmOpen(false);
-    showFlash(`${created.name}を開始しました`);
+    setJustAddedId(created.id);
   }
 
   function deleteCohort(id: string) {
     const target = cohorts.find((c) => c.id === id);
     if (!target) return;
     deleteCohortInStore(id);
-    showFlash(`${target.name}を削除しました`);
   }
 
   return (
@@ -55,19 +44,14 @@ export default function CohortsPage() {
       <PageHeader
         title="期"
         description="期をクリックすると、その期のチーム構成を確認・編集できます。新しい期を開始することもできます。"
-        actions={
-          flash ? (
-            <span className="text-[12.5px] font-medium text-accent">{flash}</span>
-          ) : undefined
-        }
       />
 
-      <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12">
+      <div className="max-w-[720px] px-8 py-8 lg:px-12">
         {/* リスト右上のアクション */}
         <div className="rise mb-3 flex justify-end">
           <button
             type="button"
-            onClick={() => setConfirmOpen(true)}
+            onClick={startNewCohort}
             className="inline-flex items-center gap-1.5 rounded-xl bg-accent px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-accent-hover"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="h-4 w-4">
@@ -84,7 +68,7 @@ export default function CohortsPage() {
               const on = current === c.id;
               const empty = stats[c.id].users === 0;
               return (
-                <li key={c.id}>
+                <li key={c.id} className={c.id === justAddedId ? "row-enter" : undefined}>
                   <Link
                     href={`/cohorts/${c.id}`}
                     className="group flex items-center gap-3 px-4 py-3.5 transition hover:bg-paper/70"
@@ -125,48 +109,6 @@ export default function CohortsPage() {
           </ul>
         </div>
       </div>
-
-      {/* 新しい期を開始する確認ダイアログ */}
-      {confirmOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-ink/30 backdrop-blur-[1px]"
-            onClick={() => setConfirmOpen(false)}
-          />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="confirm-title"
-            className="rise relative w-full max-w-[440px] rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.35)]"
-          >
-            <h2 id="confirm-title" className="font-display text-[18px] font-bold text-ink">
-              {nextName}を開始しますか？
-            </h2>
-            <p className="mt-3 text-[13.5px] leading-relaxed text-ink-2">
-              以降、<span className="font-semibold text-ink">app.praha-challenge.com</span>{" "}
-              からの新規サインアップは
-              <span className="font-semibold text-ink">{nextName}</span>
-              として登録されます。
-            </p>
-            <div className="mt-6 flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setConfirmOpen(false)}
-                className="rounded-xl border border-line-strong bg-surface px-4 py-2.5 text-[13.5px] font-semibold text-ink-2 transition hover:bg-paper"
-              >
-                キャンセル
-              </button>
-              <button
-                type="button"
-                onClick={startNewCohort}
-                className="rounded-xl bg-accent px-5 py-2.5 text-[13.5px] font-semibold text-white transition hover:bg-accent-hover"
-              >
-                {nextName}を開始する
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

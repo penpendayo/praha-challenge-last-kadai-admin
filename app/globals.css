@@ -110,3 +110,13 @@ body {
 
 /* .rise は各ページで使用中。表示時のふわっとしたアニメーションは無効化している。 */
 .rise { }
+
+/* 新しく追加された行の登場アニメーション（行がスッと開いてフェードイン）*/
+@keyframes row-enter {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 5rem; opacity: 1; }
+}
+.row-enter {
+  overflow: hidden;
+  animation: row-enter 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}

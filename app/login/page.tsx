@@ -3,21 +3,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+// デフォルトで入力しておくサンプル値（認証はしないので何でもよい）
+const SAMPLE_EMAIL = "admin@praha-inc.com";
+const SAMPLE_PASSWORD = "praha1234";
+
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  // デフォルトで入力済みにしておく（そのままログインできる）
+  const [email, setEmail] = useState(SAMPLE_EMAIL);
+  const [password, setPassword] = useState(SAMPLE_PASSWORD);
   const [loading, setLoading] = useState(false);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    if (!email || !password) {
-      setError("メールアドレスとパスワードを入力してください。");
-      return;
-    }
-    // モックなので認証はせず、そのまま管理画面へ遷移する
+    // モックなので認証はせず、どんな入力でも管理画面へ遷移する
     setLoading(true);
     setTimeout(() => router.push("/users"), 500);
   }
@@ -30,7 +29,6 @@ export default function LoginPage() {
           <span className="font-display text-[20px] font-bold tracking-wide text-ink">
             PrAha Challenge Admin
           </span>
-          <p className="mt-1.5 text-[13px] text-muted">管理コンソールにログイン</p>
         </div>
 
         <form
@@ -67,28 +65,17 @@ export default function LoginPage() {
             </label>
           </div>
 
-          {error && (
-            <p className="mt-4 rounded-lg bg-rose-soft px-3 py-2 text-[12.5px] font-medium text-rose">
-              {error}
-            </p>
-          )}
+          <p className="mt-5 rounded-lg bg-accent-soft px-3 py-2 text-center text-[12px] font-medium text-accent-ink">
+            モックのため、どんな内容を入力してもログインできます
+          </p>
 
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 w-full rounded-xl bg-accent px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:bg-line-strong disabled:text-faint"
+            className="mt-4 w-full rounded-xl bg-accent px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:bg-line-strong disabled:text-faint"
           >
             {loading ? "ログイン中…" : "ログイン"}
           </button>
-
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              className="text-[12.5px] font-medium text-accent transition hover:underline"
-            >
-              パスワードをお忘れですか？
-            </button>
-          </div>
         </form>
 
         <p className="mt-6 text-center text-[11.5px] text-faint">

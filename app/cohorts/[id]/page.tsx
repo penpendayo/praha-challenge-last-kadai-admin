@@ -19,7 +19,8 @@ export default function CohortTeamsPage({
   const cohort = store.cohorts.find((c) => c.id === id);
   const teams = store.teams.filter((t) => t.cohortId === id);
 
-  const [flash, setFlash] = useState("");
+  // 直前に追加したチーム（登場アニメーションを付ける対象）
+  const [justAddedId, setJustAddedId] = useState<string | null>(null);
 
   // チームごとの受講生数（ストア基準）。新設チームは 0 名。
   const memberCounts = useMemo(() => {
@@ -28,21 +29,15 @@ export default function CohortTeamsPage({
     return map;
   }, [store.users]);
 
-  function showFlash(message: string) {
-    setFlash(message);
-    setTimeout(() => setFlash(""), 1800);
-  }
-
   function addTeam() {
     const created = addTeamInStore(id);
-    showFlash(`${created.name} を追加しました`);
+    setJustAddedId(created.id);
   }
 
   function deleteTeam(teamId: string) {
     const target = teams.find((t) => t.id === teamId);
     if (!target) return;
     deleteTeamInStore(teamId);
-    showFlash(`${target.name} を削除しました`);
   }
 
   // 期が見つからないとき（不正な ID / 未復元）は 404 相当の案内を出す
@@ -50,7 +45,7 @@ export default function CohortTeamsPage({
     return (
       <>
         <PageHeader title="期が見つかりません" backHref="/cohorts" />
-        <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12">
+        <div className="max-w-[720px] px-8 py-8 lg:px-12">
           <p className="rise text-[13.5px] text-muted">
             指定された期は存在しません。
             <Link href="/cohorts" className="ml-1 font-medium text-accent hover:underline">
@@ -69,14 +64,9 @@ export default function CohortTeamsPage({
         title={`${cohort.name} のチーム`}
         description="この期に所属するチームの一覧です。チームの追加・削除ができます。"
         backHref="/cohorts"
-        actions={
-          flash ? (
-            <span className="text-[12.5px] font-medium text-accent">{flash}</span>
-          ) : undefined
-        }
       />
 
-      <div className="mx-auto max-w-[720px] px-8 py-8 lg:px-12">
+      <div className="max-w-[720px] px-8 py-8 lg:px-12">
         {/* リスト右上のアクション */}
         <div className="rise mb-3 flex justify-end">
           <button
@@ -102,7 +92,7 @@ export default function CohortTeamsPage({
                 const members = memberCounts[t.id] ?? 0;
                 const empty = members === 0;
                 return (
-                  <li key={t.id}>
+                  <li key={t.id} className={t.id === justAddedId ? "row-enter" : undefined}>
                     <Link
                       href={`/cohorts/${id}/teams/${t.id}`}
                       className="group flex items-center gap-3 px-4 py-3.5 transition hover:bg-paper/70"

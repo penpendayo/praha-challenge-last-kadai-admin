@@ -307,11 +307,15 @@ export const payments: Payment[] = users.flatMap((u) => {
   // （在籍に変更しても「支払い済み」にはならず、未払いから始まる）
   if ((u.status ?? DEFAULT_USER_STATUS) === "trial") return [];
   const start = u.joinedAt.slice(0, 7);
+  // 2期・3期は当月分を全員支払い済みにする
+  const paidCurrentByCohort = u.cohortId === "c2" || u.cohortId === "c3";
   return monthsBetween(start, CURRENT_MONTH).map((month) => {
     const isCurrent = month === CURRENT_MONTH;
     // 当月は一部のユーザーが未払い、過去月はたまに未払いが混ざる、という体
     const unpaid = isCurrent
-      ? hashStr(u.id) % 3 === 0
+      ? paidCurrentByCohort
+        ? false
+        : hashStr(u.id) % 3 === 0
       : hashStr(`${u.id}:${month}`) % 11 === 0;
     const status: PaymentStatus = unpaid ? "unpaid" : "paid";
     return {

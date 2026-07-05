@@ -38,7 +38,7 @@ export default function ChallengeAccessPage() {
         description="チームごとに、開放するジャンルを設定します。"
       />
 
-      <div className="mx-auto max-w-[1180px] px-8 py-8 lg:px-12">
+      <div className="max-w-[1180px] px-8 py-8 lg:px-12">
         <div className="rise space-y-8">
           {cohorts.map((c) => {
             const list = teamsByCohort(c.id);
