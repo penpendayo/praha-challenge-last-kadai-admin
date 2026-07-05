@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/sidebar";
-import { RouteProgress } from "@/components/route-progress";
+import { RouteSpinner } from "@/components/route-spinner";
 
 // サイドバーを出さないページ（ログインなど）
 const BARE_ROUTES = ["/login"];
@@ -15,7 +15,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <RouteProgress />
+      <RouteSpinner />
       <div className="flex min-h-screen">
         <Sidebar />
         <main className="paper-grain min-w-0 flex-1">{children}</main>
