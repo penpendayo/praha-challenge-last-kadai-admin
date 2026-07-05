@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/*
+  PrAha Challenge 管理コンソール — デザインシステム
+  公式サイト（praha-challenge.com）のトーンに準拠:
+  白基調のクリーンな面 × 明るいブルー #007cff、アクセントにコーラル #f84f65。
+  フォントは Inter + Noto Sans JP。
+*/
+
+:root {
+  /* surfaces (light) */
+  --paper: #f5f6f8;
+  --surface: #fafbfc;
+  --surface-raised: #ffffff;
+
+  /* text */
+  --ink: #1a1a1a;
+  --ink-2: #3d3d3d;
+  --muted: #616161;
+  --faint: #9e9e9e;
+
+  /* lines */
+  --line: #eaeaec;
+  --line-strong: #dcdce0;
+
+  /* accent — brand blue */
+  --accent: #007cff;
+  --accent-hover: #0068d6;
+  --accent-soft: #e5f1ff;
+  --accent-ink: #005bb8;
+
+  /* status / secondary */
+  --amber: #b7791f;
+  --amber-soft: #f7edd6;
+  --sky: #4b9cfb;
+  --sky-soft: #e6f1ff;
+  --rose: #f84f65; /* brand coral */
+  --rose-soft: #ffe6ea;
+
+  /* sidebar (light) */
+  --nav-bg: #ffffff;
+  --nav-line: #ececee;
+  --nav-text: #3d3d3d;
+  --nav-muted: #9e9e9e;
+  --nav-active: #1a1a1a;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-sky: var(--sky);
+  --color-sky-soft: var(--sky-soft);
+  --color-rose: var(--rose);
+  --color-rose-soft: var(--rose-soft);
+  --color-nav-bg: var(--nav-bg);
+  --color-nav-line: var(--nav-line);
+  --color-nav-text: var(--nav-text);
+  --color-nav-muted: var(--nav-muted);
+  --color-nav-active: var(--nav-active);
+
+  --font-sans: var(--font-inter), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), var(--font-noto), ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+}
+
+* {
+  border-color: var(--line);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 1;
+}
+
+/* クリーンなフラット面（地紋なし）*/
+.paper-grain {
+  background: var(--paper);
+}
+
+/* 数字を等幅で気持ちよく */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+/* thin scrollbar */
+.thin-scroll::-webkit-scrollbar { height: 10px; width: 10px; }
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 99px;
+  border: 3px solid var(--paper);
+}
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* .rise は各ページで使用中。表示時のふわっとしたアニメーションは無効化している。 */
+.rise { }
