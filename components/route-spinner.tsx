@@ -41,14 +41,25 @@ export function RouteSpinner() {
   if (!active) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-y-0 right-0 left-[264px] z-50 flex items-center justify-center">
-      <span className="grid place-items-center rounded-2xl bg-surface-raised/90 p-4 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.25)] ring-1 ring-line backdrop-blur-sm">
+    // ヘッダー直下＝コンテンツ領域を覆い、開始位置に左寄せでスピナーを出す
+    <div
+      aria-hidden
+      className="absolute inset-x-0 bottom-0 z-40 bg-paper"
+      style={{ top: "var(--page-header-h, 96px)" }}
+    >
+      <div className="max-w-[1180px] px-8 py-9 lg:px-12">
         <span
-          className="h-7 w-7 animate-spin rounded-full border-[3px] border-line-strong border-t-accent"
+          className="inline-flex items-center gap-2.5 text-[13px] font-medium text-muted"
           role="status"
           aria-label="読み込み中"
-        />
-      </span>
+        >
+          <svg className="h-5 w-5 animate-spin text-accent" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.2" strokeWidth="3" />
+            <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+          </svg>
+          読み込み中…
+        </span>
+      </div>
     </div>
   );
 }

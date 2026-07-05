@@ -14,12 +14,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
   if (bare) return <main className="paper-grain min-h-screen">{children}</main>;
 
   return (
-    <>
-      <RouteSpinner />
-      <div className="flex min-h-screen">
-        <Sidebar />
-        <main className="paper-grain min-w-0 flex-1">{children}</main>
-      </div>
-    </>
+    <div className="flex min-h-screen">
+      <Sidebar />
+      <main className="paper-grain relative min-w-0 flex-1">
+        <RouteSpinner />
+        {children}
+      </main>
+    </div>
   );
 }
